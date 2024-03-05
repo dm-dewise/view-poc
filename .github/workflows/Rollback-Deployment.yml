@@ -19,5 +19,5 @@ jobs:
         uses: tj-actions/pg-restore@v6
         with:
           database_url: "jdbc:postgresql://postgres:password@localhost:5432/viewall"
-          backup_file: "https://strgacntsftp.blob.core.windows.net/db-dump/dump-viewall.sql"
+          backup_file: "dump-viewall-202403051322.sql"
           postgresql_version: "16"  # Note: Only the major version is required e.g. 12, 14, 15
