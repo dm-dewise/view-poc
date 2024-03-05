@@ -10,20 +10,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      # checkout the repo
-      - uses: actions/checkout@master
-      - uses: Azure/login@v1
+    steps:   
+      # Checkout the repository
+      - uses: actions/checkout@v2
+
+      # Run pg-restore
+      - name: Postgres Backup Restore
+        uses: tj-actions/pg-restore@v6
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Azure Blob Storage - Download Blob
-        uses: armanrahman22/azblob-download-action
-        with:
-          storage-account-name: "strgacntsftp"
-          container-name: "db-dump"
-          blob-name: "dump-viewall"
-          download-path: "."
-      - name: View Output
-        run: |
-          ls
-          cat dump-viewall
+          database_url: "jdbc:postgresql://postgres:password@localhost:5432/viewall"
+          backup_file: "https://strgacntsftp.blob.core.windows.net/db-dump/dump-viewall.sql"
+          postgresql_version: "16"  # Note: Only the major version is required e.g. 12, 14, 15
