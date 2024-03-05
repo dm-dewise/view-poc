@@ -1,0 +1,29 @@
+name: Rollback Deployment
+
+on:  
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the repo
+      - uses: actions/checkout@master
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Blob Storage - Download Blob
+        uses: armanrahman22/azblob-download-action@v1
+        with:
+          storage-account-name: "strgacntsftp"
+          container-name: "db-dump"
+          blob-name: "dump-viewall"
+          download-path: "."
+      - name: View Output
+        run: |
+          ls
+          cat dump-viewall
