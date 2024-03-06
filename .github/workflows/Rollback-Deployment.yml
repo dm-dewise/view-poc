@@ -20,4 +20,4 @@ jobs:
         with:
           database_url: "jdbc:postgresql://postgres:password@localhost:5432/viewall"
           backup_file: "dump-viewall-202403051322.sql"
-          postgresql_version: "16"  # Note: Only the major version is required e.g. 12, 14, 15
+          postgresql_version: "15"  
