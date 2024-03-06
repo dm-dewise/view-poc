@@ -40,13 +40,10 @@ jobs:
           sudo systemctl start postgresql.service
 
       # Run pg-restore
-      - name: Postgres Backup Restore
-        run: |   
-          pg_restore --clean --host postgreflex-viewall-weu-mvp.postgres.database.azure.com --port 5432 --username viewalladmin -w --dbname viewall-test --verbose backups/dump-viewall-202403051322.sql
-        # uses: tj-actions/pg-restore@v6
-        # with:          
-        #   database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
-        #   backup_file: "backups/backup.sql"
-        #   postgresql_version: "16"            
-      
-          
+      - name: Postgres Backup Restore        
+        uses: tj-actions/pg-restore@v6
+        with:          
+          database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
+          backup_file: "backups/backup.sql"
+          options: "-f"
+          postgresql_version: "16"
