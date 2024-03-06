@@ -42,8 +42,7 @@ jobs:
       # Run pg-restore
       - name: Postgres Backup Restore
         run: |   
-          pg_restore postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test --clean "backups/dump-viewall-202403051322.sql"
-
+          pg_restore "backups/dump-viewall-202403051322.sql" postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test --clean 
         # uses: tj-actions/pg-restore@v6
         # with:          
         #   database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
