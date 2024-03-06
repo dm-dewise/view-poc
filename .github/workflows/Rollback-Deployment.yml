@@ -22,7 +22,7 @@ jobs:
       # Run pg-restore
       - name: Postgres Backup Restore
         uses: tj-actions/pg-restore@v6
-        with:
-          database_url: "postgresql://postgres:password@localhost:5432"
+        with:          
+          database_url: "postgressql://USER_NAME:password@localhost:5432/viewall"
           backup_file: "dump-viewall-202403051322.sql"
           postgresql_version: "16"  
