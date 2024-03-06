@@ -38,7 +38,13 @@ jobs:
       - name: Run service
         run: |
           sudo systemctl start postgresql.service
-
+          
+      - name: Delete  schema of DB destination
+        run: psql -d "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" -c "DROP SCHEMA IF EXISTS schema_name CASCADE;"
+        
+      - name: Recreate schema of DB destination
+        run: psql -d "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS schema_name;"
+    
       # Run pg-restore
       - name: Postgres Backup Restore        
         uses: tj-actions/pg-restore@v6
