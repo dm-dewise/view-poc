@@ -41,14 +41,8 @@ jobs:
 
       # Run pg-restore
       - name: Postgres Backup Restore
-        run: |
-          pg_restore 
-          --host=localhost 
-          --port=5432 
-          --username=postgres 
-          --format=directory 
-          --dbname=viewall 
-          -C "backups/dump-viewall-202403051322.sql"
+        run: |          
+          pg_restore -h localhost -p 5432 -u postgres -d viewall -c -f "backups/dump-viewall-202403051322.sql"
 
         # uses: tj-actions/pg-restore@v6
         # with:          
