@@ -7,27 +7,7 @@ permissions:
   id-token: write
   contents: read
 
-jobs:
-  # checout-latest-backup:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Azure Login
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.AZURE_CREDENTIALS }}      
-
-  #     - name: Azure Blob Storage - Download Blob
-  #       uses: armanrahman22/azblob-download-action
-  #       with:
-  #         storage-account-name: "strgacntsftp"
-  #         container-name: "db-dump"
-  #         blob-name: "dump-viewall"
-  #         download-path: "."
-  #     - name: View Output
-  #       run: |
-  #         ls
-  #         cat dump-viewall
-
+jobs:  
   restore-postgres-db:
     runs-on: ubuntu-latest
     steps:   
@@ -54,3 +34,21 @@ jobs:
         #   backup_file: "backups/dump-viewall-202403051322.sql"
         #   options: "-f"
         #   postgresql_version: "16"
+
+  switch-revisions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sign into Azure
+        uses: azure/login@v1
+        with:          
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # - name: Deploy to containerapp
+      #   uses: azure/CLI@v1
+      #   with:
+      #     inlineScript: |
+      #       az config set extension.use_dynamic_install=yes_without_prompt
+      #       az containerapp registry set -n ${{ secrets.CONTAINER_APP_NAME }} -g ${{ secrets.RESOURCEGROUP_NAME }} --server ${{ secrets.ACR_LOGIN_SERVER }} --username ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }}
+      #       az containerapp update -n ${{ secrets.CONTAINER_APP_NAME }} -g ${{ secrets.RESOURCEGROUP_NAME }} --image ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.CONTAINER_APP_NAME }}:${{ github.sha }}
