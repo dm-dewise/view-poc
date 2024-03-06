@@ -42,7 +42,8 @@ jobs:
       # Run pg-restore
       - name: Postgres Backup Restore
         run: |          
-          pg_restore --host=postgreflex-viewall-weu-mvp.postgres.database.azure.com --port=5432 --username=viewalladmin -w --dbname=viewall-test --clean "backups/dump-viewall-202403051322.sql"
+          # pg_restore default="postgres://postgres:password@127.0.0.1:5432/DBname" --host=postgreflex-viewall-weu-mvp.postgres.database.azure.com --clean "backups/dump-viewall-202403051322.sql"
+          pg_restore postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test --clean "backups/dump-viewall-202403051322.sql"
 
         # uses: tj-actions/pg-restore@v6
         # with:          
