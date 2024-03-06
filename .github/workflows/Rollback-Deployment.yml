@@ -45,5 +45,5 @@ jobs:
         with:          
           database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
           backup_file: "backups/dump-viewall-202403051322.sql"
-          options: "-f"
+          options: "-d"
           postgresql_version: "16"
