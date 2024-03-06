@@ -40,17 +40,17 @@ jobs:
           sudo systemctl start postgresql.service
           
       - name: Delete  schema of DB destination
-        run: psql -d "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" -c "DROP SCHEMA IF EXISTS public CASCADE;"
+        run: psql -d "postgres://postgres:password@localhost:5432/viewall-test" -c "DROP SCHEMA IF EXISTS public CASCADE;"
         
       - name: Recreate schema of DB destination
-        run: psql -d "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS public;"
+        run: psql -d "postgres://postgres:password@localhost:5432/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS public;"
     
       # Run pg-restore
       - name: Postgres Backup Restore   
-        run: psql -d pg_restore "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" "backups/dump-viewall-202403051322.sql"     
+        run: psql -d pg_restore "postgres://postgres:password@localhost:5432/viewall-test" "backups/dump-viewall-202403051322.sql"     
         # uses: tj-actions/pg-restore@v6
         # with:          
-        #   database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
+        #   database_url: "postgres://postgres:password@localhost:5432/viewall-test"
         #   backup_file: "backups/dump-viewall-202403051322.sql"
-        #   options: "-d"
+        #   options: "-f"
         #   postgresql_version: "16"
