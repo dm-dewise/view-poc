@@ -18,6 +18,6 @@ jobs:
       - name: Postgres Backup Restore
         uses: tj-actions/pg-restore@v6
         with:
-          database_url: "postgresql://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
+          database_url: "postgresql://postgres:password@localhost:5432/viewall"
           backup_file: "dump-viewall-202403051322.sql"
-          postgresql_version: "15"  
+          postgresql_version: "16"  
