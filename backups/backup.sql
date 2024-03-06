@@ -56,3 +56,13 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
 --
 
 COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+CREATE TABLE IF NOT EXISTS public.investment_instrument_marketplace (
+	pk_insref int4 NOT NULL,
+	"name" varchar NOT NULL,
+	symbol varchar NULL,
+	country bpchar(2) NULL,
+	selected bool DEFAULT false,
+	CONSTRAINT investment_instrument_marketplace_pkey PRIMARY KEY (pk_insref)
+);
+CREATE INDEX investment_instrument_marketplace_name_idx ON public.investment_instrument_marketplace USING btree (name);
