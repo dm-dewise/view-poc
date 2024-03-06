@@ -1,0 +1,21 @@
+name: Back up ViewAll Database
+run-name: cron task to backup ViewAll DB
+on:
+#   schedule:
+#     - cron: '0 4 * * *'
+  workflow_dispatch:
+jobs:
+  backup:
+    runs-on: ubuntu-22.04
+    env:
+      MODE: "backup"      
+    steps:
+        - name: Azure Container Registry Login 
+          uses: Azure/docker-login@v1 
+          with:            
+            login-server:  ${{ secrets.CONTAINER_REGISTRY_NAME }}          
+            username: ${{ secrets.REGISTRY_USERNAME }}            
+            password: ${{ secrets.REGISTRY_PASSWORD }}     
+        - name: Build and Push the Docker image
+          run:  | 
+            docker run viewall-db-backup-restore:latest           
