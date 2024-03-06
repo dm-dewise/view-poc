@@ -46,10 +46,11 @@ jobs:
         run: psql -d "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS public;"
     
       # Run pg-restore
-      - name: Postgres Backup Restore        
-        uses: tj-actions/pg-restore@v6
-        with:          
-          database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
-          backup_file: "backups/dump-viewall-202403051322.sql"
-          options: "-d"
-          postgresql_version: "16"
+      - name: Postgres Backup Restore   
+        run: psql -d pg_restore "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test" "backups/dump-viewall-202403051322.sql"     
+        # uses: tj-actions/pg-restore@v6
+        # with:          
+        #   database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
+        #   backup_file: "backups/dump-viewall-202403051322.sql"
+        #   options: "-d"
+        #   postgresql_version: "16"
