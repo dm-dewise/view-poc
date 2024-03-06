@@ -49,6 +49,6 @@ jobs:
           database_url: "postgres://viewalladmin:NiceDevice7@postgreflex-viewall-weu-mvp.postgres.database.azure.com:5432/viewall-test"
           backup_file: "backups/dump-viewall-202403051322.sql"
           postgresql_version: "16"  
-          options: directory
+          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       
           
