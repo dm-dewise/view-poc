@@ -8,6 +8,26 @@ permissions:
   contents: read
 
 jobs:
+  checout-latest-backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}      
+
+      - name: Azure Blob Storage - Download Blob
+        uses: armanrahman22/azblob-download-action
+        with:
+          storage-account-name: "strgacntsftp"
+          container-name: "db-dump"
+          blob-name: "dump-viewall"
+          download-path: "."
+      - name: View Output
+        run: |
+          ls
+          cat dump-viewall
+
   restore-postgres-db:
     runs-on: ubuntu-latest
     steps:   
