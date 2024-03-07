@@ -31,13 +31,4 @@ jobs:
 
         - name: Run image from ACR container
           run:  |                       
-            docker run acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest
-            -e MODE=${{ env.MODE }}
-            -e PG_HOST=${{ env.PG_HOST }}
-            -e PG_USERNAME=${{ env.PG_USERNAME }}
-            -e PG_DB=${{ env.PG_DB }}
-            -e PGPASSWORD=${{ env.PGPASSWORD }}
-            -e AZ_STORAGE_ACCOUNT=${{ env.AZ_STORAGE_ACCOUNT }}
-            -e AZ_CONTAINER_NAME=${{ env.AZ_CONTAINER_NAME }}
-            -e AZ_SAS_TOKEN=${{ env.AZ_SAS_TOKEN }}
-            -e SENDGRID_APIKEY=${{ env.SENDGRID_APIKEY }}
+            docker run acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest env
