@@ -1,5 +1,5 @@
 name: Back up ViewAll Database
-run-name: cron task to backup ViewAll DB
+
 on:
 #   schedule:
 #     - cron: '0 4 * * *'
@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       MODE: "backup"      
+      PG_HOST: ${{ secrets.VA_BACKUP_PG_HOST }}
+      PG_USERNAME: ${{ secrets.VA_BACKUP_PG_USERNAME }}
+      PG_DB: ${{ secrets.VA_BACKUP_PG_DB }}
+      PGPASSWORD: ${{ secrets.VA_BACKUP_PGPASSWORD }}
+      AZ_STORAGE_ACCOUNT: ${{ secrets.VA_BACKUP_AZ_STORAGE_ACCOUNT }}
+      AZ_CONTAINER_NAME: ${{ secrets.VA_BACKUP_AZ_CONTAINER_NAME }}
+      AZ_SAS_TOKEN: ${{ secrets.VA_BACKUP_AZ_SAS_TOKEN }}
+      SENDGRID_APIKEY: ${{ secrets.VA_BACKUP_SENDGRID_APIKEY }}
     steps:
         - name: Azure Container Registry Login 
           uses: Azure/docker-login@v1 
@@ -16,6 +24,20 @@ jobs:
             login-server:  ${{ secrets.CONTAINER_REGISTRY_NAME }}          
             username: ${{ secrets.REGISTRY_USERNAME }}            
             password: ${{ secrets.REGISTRY_PASSWORD }}     
-        - name: Build and Push the Docker image
-          run:  | 
-            docker run viewall-db-backup-restore:latest           
+
+        - name: Pull image from ACR container
+          run:  |                       
+            docker pull acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest
+
+        - name: Run image from ACR container
+          run:  |                       
+            docker run acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest
+            -e MODE=${{ env.MODE }}
+            -e PG_HOST=${{ env.PG_HOST }}
+            -e PG_USERNAME=${{ env.PG_USERNAME }}
+            -e PG_DB=${{ env.PG_DB }}
+            -e PGPASSWORD=${{ env.PGPASSWORD }}
+            -e AZ_STORAGE_ACCOUNT=${{ env.AZ_STORAGE_ACCOUNT }}
+            -e AZ_CONTAINER_NAME=${{ env.AZ_CONTAINER_NAME }}
+            -e AZ_SAS_TOKEN=${{ env.AZ_SAS_TOKEN }}
+            -e SENDGRID_APIKEY=${{ env.SENDGRID_APIKEY }}
