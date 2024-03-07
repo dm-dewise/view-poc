@@ -10,30 +10,30 @@ permissions:
 jobs:  
   restore-postgres-db:
     runs-on: ubuntu-latest
-    steps:   
-      # Checkout the repository
-      - uses: actions/checkout@v2
+    # steps:   
+    #   # Checkout the repository
+    #   - uses: actions/checkout@v2
 
-      # Run postgre service
-      - name: Run service
-        run: |
-          sudo systemctl start postgresql.service
+    #   # Run postgre service
+    #   - name: Run service
+    #     run: |
+    #       sudo systemctl start postgresql.service
           
-      - name: Delete  schema of DB destination
-        run: psql -d "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" -c "DROP SCHEMA IF EXISTS public CASCADE;"
+    #   - name: Delete  schema of DB destination
+    #     run: psql -d "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" -c "DROP SCHEMA IF EXISTS public CASCADE;"
         
-      - name: Recreate schema of DB destination
-        run: psql -d "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS public;"
+    #   - name: Recreate schema of DB destination
+    #     run: psql -d "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" -c "CREATE SCHEMA IF NOT EXISTS public;"
     
-      # Run pg-restore
-      - name: Postgres Backup Restore   
-        run: psql -d pg_restore "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" "backups/dump-viewall-202403051322.sql"     
-        # uses: tj-actions/pg-restore@v6
-        # with:          
-        #   database_url: "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test"
-        #   backup_file: "backups/dump-viewall-202403051322.sql"
-        #   options: "-f"
-        #   postgresql_version: "16"
+    #   # Run pg-restore
+    #   - name: Postgres Backup Restore   
+    #     run: psql -d pg_restore "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test" "backups/dump-viewall-202403051322.sql"     
+    #     # uses: tj-actions/pg-restore@v6
+    #     # with:          
+    #     #   database_url: "postgres://postgres:Gr33nT34!234@localhost:5433/viewall-test"
+    #     #   backup_file: "backups/dump-viewall-202403051322.sql"
+    #     #   options: "-f"
+    #     #   postgresql_version: "16"
 
   switch-revisions:
     runs-on: ubuntu-latest
