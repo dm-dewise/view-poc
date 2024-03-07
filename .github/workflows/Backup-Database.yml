@@ -31,4 +31,4 @@ jobs:
 
         - name: Run image from ACR container
           run:  |                       
-            docker run acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest env
+            docker run env acrviewallweumvp.azurecr.io/viewall-db-backup-restore:latest
